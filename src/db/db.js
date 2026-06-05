@@ -1,13 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 async function dbConnection() {
-    try {
-        await mongoose.connect("mongodb://BackendDEV:helloworld@ac-gsra2jh-shard-00-00.vvxp6lu.mongodb.net:27017,ac-gsra2jh-shard-00-01.vvxp6lu.mongodb.net:27017,ac-gsra2jh-shard-00-02.vvxp6lu.mongodb.net:27017/backend?ssl=true&replicaSet=atlas-ls0ooa-shard-0&authSource=admin&appName=Cluster0")
+  try {
+    mongoose
+      .connect(process.env.MONGODB_URI)
+      .then(() => console.log("DB Connected"))
+      .catch((err) => console.log(err));
 
-        console.log("Database Connected Successfully !")
-    } catch (error) {
-        console.log(error)
-    }
+    console.log("Database Connected Successfully !");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-module.exports = dbConnection
+module.exports = dbConnection;

@@ -1,8 +1,9 @@
 const express = require("express");
 const dbConnection = require("./db/db");
+const dotenv = require("dotenv");
 const Notes = require("./db/schema");
 const app = express();
-
+dotenv.config();
 dbConnection();
 
 let notes = [];
