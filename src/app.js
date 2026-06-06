@@ -1,19 +1,17 @@
 const express = require("express");
 const dbConnection = require("./db/db");
 const dotenv = require("dotenv");
-const Notes = require("./db/schema");
+const Notes = require("./models/note.model");
+
 const app = express();
 dotenv.config();
 dbConnection();
-
-let notes = [];
 
 app.use(express.json());
 
 app.post("/", async (req, res) => {
   try {
     const payload = req.body;
-    // notes.push(payload);
 
     const save = await Notes.create(payload);
 
@@ -57,7 +55,6 @@ app.patch("/:id", async (req, res) => {
       });
     }
 
-    // update only if value exists
     if (payload.title !== undefined) {
       note.title = payload.title;
     }
@@ -87,7 +84,7 @@ app.delete("/:id", async(req, res) => {
         let note = await Notes.deleteOne({_id : id})
         res.status(204).json({
           message: "Note deleted successfully",
-          notes,
+          note
         });
     } catch (error) {
         console.log(error);
